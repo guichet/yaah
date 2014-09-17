@@ -1,0 +1,1 @@
+<div class="text-success"> Test <?php echo($_POST["test"]);?> passed!</div>

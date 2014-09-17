@@ -1,0 +1,22 @@
+{
+  "name": "yaah-js",
+  "version": "0.1",
+  "homepage": "https://github.com/les-argonautes/yaah",
+  "authors": [
+    "adriench"
+  ],
+  "description": "Yet Another AJAX Helper",
+  "main": "yaah.js",
+  "keywords": [
+    "jquery",
+    "scroll",
+    "ajax",
+    "yaah"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components"
+  ]
+}

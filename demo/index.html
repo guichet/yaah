@@ -1,0 +1,109 @@
+<html>
+    <head>
+        <title>YAAH.js Tests</title>
+
+        <meta http-equiv="content-type" content="text/html; charset=utf-8">
+        <meta name="description" content="">
+        <meta name="keywords" content="">
+        <meta name="author" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <link rel="icon" type="image/x-icon" href="/favicon.ico">
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+
+        <!-- Optional theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="./css/styles.css">
+
+    </head>
+    <body>
+        <h1>YAAH! Examples</h1>
+
+        <h2>Simple</h2>
+        <h3> Example 1 - simple link </h3>
+        <a href="./ajax/test1.html" class="yaah-js">Test</a>
+
+        <h3> Example 2 - link with data-ya-href </h3>
+        <a href="" class="yaah-js" data-ya-href="./ajax/test2.html">Test</a>
+
+        <h3> Example 3 - button with data-ya-href </h3>
+        <button class="yaah-js" data-ya-href="./ajax/test3.html">Test</button>
+
+        <h3> Example 4 - link with data-ya-post </h3>
+        <a href="./ajax/test.php" class="yaah-js" data-ya-post="test=4">Test</a>
+
+        <h2>Location</h2>
+        <h3> Example 5 - data-ya-location="after" </h3>
+        <a href="./ajax/test.php" class="yaah-js" data-ya-location="after" data-ya-post="test=5">Test</a>
+
+        <h3> Example 6 - data-ya-location="before" </h3>
+        <a href="./ajax/test.php" class="yaah-js" data-ya-location="before" data-ya-post="test=6">Test</a>
+
+        <h3> Example 7 - data-ya-location="inner" </h3>
+        <div data-ya-href="./ajax/test.php" class="yaah-js" data-ya-location="inner" data-ya-post="test=7">Click Me!</div>
+
+        <h3> Example 8 - data-ya-location="remove" </h3>
+        <a href="./ajax/test.php" class="yaah-js" data-ya-location="remove" data-ya-post="test=8">Test</a>
+
+        <h3> Example 9 - data-ya-location="none" </h3>
+        <a href="./ajax/test.php" class="yaah-js" data-ya-location="none" data-ya-post="test=9">Test</a>
+
+        <h3> Example 10 - data-ya-target="#target" </h3>
+        <a href="./ajax/test.php" class="yaah-js" data-ya-target="#target" data-ya-post="test=10">Test</a>
+        <div id="target">
+            Target Div #target Original content
+        </div>
+
+        <h2>Trigger</h2>
+        <h3> Example 11 - data-ya-trigger="autoload" </h3>
+        <a href="./ajax/test.php" class="yaah-js" data-ya-trigger="autoload" data-ya-post="test=11">Test</a>
+
+        <h3> Example 12 - data-ya-trigger="always" </h3>
+        <a href="./ajax/test.php" class="yaah-js" data-ya-trigger="always" data-ya-post="test=12" data-ya-location="after">Test</a>
+
+        <h2>Redirect</h2>
+        <h3> Example 13 - data-ya-redirect </h3>
+        <a href="./ajax/test.php" class="yaah-js" data-ya-redirect="http://www.peugeot.fr">Test</a>
+
+        <h2>yaah-js in loaded content</h2>
+        <h3> Example 13 - load </h3>
+        <a href="./ajax/test2.php" class="yaah-js">Test</a>
+
+        <h2>Confirm</h2>
+        <h3> Example 14 - data-ya-confirm </h3>
+        <a href="./ajax/test.php" class="yaah-js" data-ya-confirm="JavaScript! Do you speak it?" data-ya-post="test=14">Test</a>
+
+        <h2>PushState</h2>
+        <h3> Example 15 - data-ya-pushstate </h3>
+        <a href="./ajax/test.php" class="yaah-js" data-ya-pushstate="#moncul" data-ya-post="test=15">Test</a>
+
+
+        <h2>Form</h2>
+        <h3> Example 16 - data-ya-scroll</h3>
+        <form id="test_form_id" class="yaah-js" data-ya-trigger="submit" data-ya-post="test=16" action='./ajax/test2.php'>
+            <li><label> Truc 1<input type="text" name="truc"/></label></li>
+            <li><label> Truc 2<input type="text" name="truc2"/></label></li>
+            <li><label> Truc 3<input type="text" name="truc3"/></label></li>
+            <li><label> Truc 4<input type="text" name="truc4"/></label></li>
+            <li><label> Truc 5<input type="text" name="truc5"/></label></li>
+            <button type="submit">Send</button>
+        </form>
+
+
+        <h2>Scroll</h2>
+        <h3> Example 17 - data-ya-scroll</h3>
+        <ul class="yaah-js" data-ya-href="./ajax/test.php" data-ya-scroll="true" data-ya-post="test=17">
+            <li>Machin</li>
+            <li>Machin</li>
+            <li>Machin</li>
+            <li>Machin</li>
+        </ul>
+
+        <script src="./vendor/modernizr.js"></script>
+        <script src="./vendor/jquery.min.js"></script>
+        <!-- Latest compiled and minified JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+        <script src="./js/YAAH.js"></script>
+    </body>
+</html>
