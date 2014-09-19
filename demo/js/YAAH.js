@@ -64,7 +64,7 @@
                     case "submit":
                         $(item).on('submit', function(event) {
                             event.preventDefault();
-                            post = $(item).serialize();
+                            post = $(this).serialize();
                             _this._ya_ajax(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle);
                         });
                     break;
@@ -90,6 +90,7 @@
                 if ( post ){
                     requestType = "POST";
                 }
+
                 // Running AJAX
                 $.ajax({
                     type: requestType,

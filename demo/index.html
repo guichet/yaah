@@ -1,6 +1,7 @@
+<!Doctype html>
 <html>
     <head>
-        <title>YAAH.js Tests</title>
+        <title>YAAH.js Demo</title>
 
         <meta http-equiv="content-type" content="text/html; charset=utf-8">
         <meta name="description" content="">
@@ -18,87 +19,328 @@
 
     </head>
     <body>
-        <h1>YAAH! Examples</h1>
+        <div class="container">
+            <h1>YAAH! <small>Demo</small></h1>
 
-        <h2>Simple</h2>
-        <h3> Example 1 - simple link </h3>
-        <a href="./ajax/test1.html" class="yaah-js">Test</a>
+            <p>Welcome ! YAAH is a simple lib for handling various cases of AJAX requests. It uses data-attributes to do that. Here's some examples to show you how to use it.</p>
 
-        <h3> Example 2 - link with data-ya-href </h3>
-        <a href="" class="yaah-js" data-ya-href="./ajax/test2.html">Test</a>
+            <br/>
+            <h3>Simple link</h3>
+            <p>It only needs a class to work. The default behavior is to replace the clicked element by the data recieved.</p>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Example</h3>
+                </div>
 
-        <h3> Example 3 - button with data-ya-href </h3>
-        <button class="yaah-js" data-ya-href="./ajax/test3.html">Test</button>
+                <div class="panel-body">
+                    <code>
+                        <span class="text-info">&lt;a</span> <span class="text-primary">href=</span><span class="text-danger" >"./path/to.html"</span><span class="text-primary"> class=</span><span class="text-danger">"yaah-js"</span><span class="text-info" >&gt;</span><span class="text-muted">Click Me!</span><span class="text-info" >&lt;/a&gt;</span>
+                    </code>
+                </div>
+                <div class="panel-footer">
+                    <a href="./ajax/test.php" class="yaah-js" data-ya-post="test=simple&nbsp;link">Click Me!</a>
+                </div>
+            </div>
 
-        <h3> Example 4 - link with data-ya-post </h3>
-        <a href="./ajax/test.php" class="yaah-js" data-ya-post="test=4">Test</a>
+            <h3>Button with <code>data-ya-href</code></h3>
+            <p>With the data-ya-href it can be used on almost any html element</p>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Example</h3>
+                </div>
 
-        <h2>Location</h2>
-        <h3> Example 5 - data-ya-location="after" </h3>
-        <a href="./ajax/test.php" class="yaah-js" data-ya-location="after" data-ya-post="test=5">Test</a>
+                <div class="panel-body">
+                    <code>
+                        <span class="text-info">&lt;button</span> <span class="text-primary">class=</span><span class="text-danger" >"yaah-js"</span><span class="text-primary"> data-ya-href=</span><span class="text-danger">"./path/to.html"</span><span class="text-info" >&gt;</span><span class="text-muted">Click Me!</span><span class="text-info" >&lt;/button&gt;</span>
+                    </code>
+                </div>
+                <div class="panel-footer">
+                    <button class="yaah-js btn btn-default" data-ya-href="./ajax/test.php" data-ya-post="test=any&nbsp;element">Click Me!</button>
+                </div>
+            </div>
 
-        <h3> Example 6 - data-ya-location="before" </h3>
-        <a href="./ajax/test.php" class="yaah-js" data-ya-location="before" data-ya-post="test=6">Test</a>
+            <h3> Passing serialized data with <code>data-ya-post</code></h3>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Example</h3>
+                </div>
 
-        <h3> Example 7 - data-ya-location="inner" </h3>
-        <div data-ya-href="./ajax/test.php" class="yaah-js" data-ya-location="inner" data-ya-post="test=7">Click Me!</div>
+                <div class="panel-body">
+                    <code>
+                        <span class="text-info">&lt;a</span> <span class="text-primary">href=</span><span class="text-danger">"./path/to.html"</span> <span class="text-primary">class=</span><span class="text-danger" >"yaah-js"</span> <span class="text-primary">data-ya-post=</span><span class="text-danger">"test=example"</span> <span class="text-info" >&gt;</span><span class="text-muted">Click Me!</span><span class="text-info" >&lt;/a&gt;</span>
+                    </code>
+                </div>
+                <div class="panel-footer">
+                    <a href="./ajax/test.php" class="yaah-js" data-ya-post="test=example">Click Me!</a>
+                </div>
+            </div>
 
-        <h3> Example 8 - data-ya-location="remove" </h3>
-        <a href="./ajax/test.php" class="yaah-js" data-ya-location="remove" data-ya-post="test=8">Test</a>
+            <br/>
 
-        <h3> Example 9 - data-ya-location="none" </h3>
-        <a href="./ajax/test.php" class="yaah-js" data-ya-location="none" data-ya-post="test=9">Test</a>
+            <h2>Handling location</h2>
+            <p>You can choose precisely where to insert the data with <code>data-ya-target</code> to choose a target other than the clicked element himself.<code>data-ya-location</code> is used to define if you want it before/after/inside/... the chosen target </p>
+            <h3>Defining the target with <code>data-ya-target="#target"</code></h3>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Example</h3>
+                </div>
 
-        <h3> Example 10 - data-ya-target="#target" </h3>
-        <a href="./ajax/test.php" class="yaah-js" data-ya-target="#target" data-ya-post="test=10">Test</a>
-        <div id="target">
-            Target Div #target Original content
+                <div class="panel-body">
+                    <code>
+                        <span class="text-info">&lt;a</span> <span class="text-primary">href=</span><span class="text-danger">"./path/to.html"</span> <span class="text-primary">class=</span><span class="text-danger" >"yaah-js"</span><span class="text-primary"> data-ya-target=</span><span class="text-danger">"#after"</span> <span class="text-info" >&gt;</span><span class="text-muted">Click Me!</span><span class="text-info" >&lt;/a&gt;</span>
+                    </code>
+                    <br/>
+                    <code>
+                        <span class="text-info">&lt;div</span> <span class="text-primary">id=</span><span class="text-danger">"#target"</span> <span class="text-info" >&gt;</span><span class="text-muted">Hey I'm a target!</span><span class="text-info" >&lt;/div&gt;</span>
+                    </code>
+                </div>
+                <div class="panel-footer">
+                    <a href="./ajax/test.php" class="yaah-js" data-ya-target="#target" data-ya-post="test=target">Click Me!</a>
+                    <div id="target">
+                        Hey I'm a target!
+                    </div>
+                </div>
+            </div>
+
+            <h3>Inserting data after the target <code>data-ya-location="after"</code></h3>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Example</h3>
+                </div>
+
+                <div class="panel-body">
+                    <code>
+                        <span class="text-info">&lt;a</span> <span class="text-primary">href=</span><span class="text-danger">"./path/to.html"</span> <span class="text-primary">class=</span><span class="text-danger" >"yaah-js"</span> <span class="text-primary">data-ya-location=</span><span class="text-danger">"after"</span> <span class="text-info" >&gt;</span><span class="text-muted">Click Me!</span><span class="text-info" >&lt;/a&gt;</span>
+                    </code>
+                </div>
+                <div class="panel-footer">
+                    <a href="./ajax/test.php" class="yaah-js" data-ya-location="after" data-ya-post="test=after">Click me!</a>
+                </div>
+            </div>
+
+            <h3>Inserting data before the target <code>data-ya-location="before"</code></h3>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Example</h3>
+                </div>
+
+                <div class="panel-body">
+                    <code>
+                        <span class="text-info">&lt;a</span> <span class="text-primary">href=</span><span class="text-danger">"./path/to.html"</span> <span class="text-primary">class=</span><span class="text-danger" >"yaah-js"</span> <span class="text-primary">data-ya-location=</span><span class="text-danger">"before"</span> <span class="text-info" >&gt;</span><span class="text-muted">Click Me!</span><span class="text-info" >&lt;/a&gt;</span>
+                    </code>
+                </div>
+                <div class="panel-footer">
+                    <a href="./ajax/test.php" class="yaah-js" data-ya-location="before" data-ya-post="test=before">Click me!</a>
+                </div>
+            </div>
+
+            <h3>Inserting data inside the target <code>data-ya-location="inner"</code></h3>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Example</h3>
+                </div>
+
+                <div class="panel-body">
+                    <code>
+                        <span class="text-info">&lt;a</span> <span class="text-primary">href=</span><span class="text-danger">"./path/to.html"</span> <span class="text-primary">class=</span><span class="text-danger" >"yaah-js"</span> <span class="text-primary">data-ya-location=</span><span class="text-danger">"inner"</span> <span class="text-info" >&gt;</span><span class="text-muted">Click Me!</span><span class="text-info" >&lt;/a&gt;</span>
+                    </code>
+                </div>
+                <div class="panel-footer">
+                    <a href="./ajax/test.php" class="yaah-js" data-ya-location="inner" data-ya-post="test=inner">Click me!</a>
+                </div>
+            </div>
+
+            <h3>Remove the target <code>data-ya-location="remove"</code></h3>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Example</h3>
+                </div>
+
+                <div class="panel-body">
+                    <code>
+                        <span class="text-info">&lt;a</span> <span class="text-primary">href=</span><span class="text-danger">"./path/to.html"</span> <span class="text-primary">class=</span><span class="text-danger" >"yaah-js"</span> <span class="text-primary">data-ya-location=</span><span class="text-danger">"remove"</span> <span class="text-info" >&gt;</span><span class="text-muted">Click Me!</span><span class="text-info" >&lt;/a&gt;</span>
+                    </code>
+                </div>
+                <div class="panel-footer">
+                    <a href="./ajax/test.php" class="yaah-js" data-ya-location="remove" data-ya-post="test=remove">Click me!</a>
+                </div>
+            </div>
+
+            <h3>Do nothing with <code>data-ya-location="none"</code></h3>
+            <p>Still don't know the purpose if this</p>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Example</h3>
+                </div>
+
+                <div class="panel-body">
+                    <code>
+                        <span class="text-info">&lt;a</span> <span class="text-primary">href=</span><span class="text-danger">"./path/to.html"</span> <span class="text-primary">class=</span><span class="text-danger" >"yaah-js"</span> <span class="text-primary">data-ya-location=</span><span class="text-danger">"none"</span> <span class="text-info" >&gt;</span><span class="text-muted">Click Me!</span><span class="text-info" >&lt;/a&gt;</span>
+                    </code>
+                </div>
+                <div class="panel-footer">
+                    <a href="./ajax/test.php" class="yaah-js" data-ya-location="none" data-ya-post="test=none">Click me!</a>
+                </div>
+            </div>
+
+            <br/>
+
+            <h2>Select event type with <code>data-ya-trigger</code></h2>
+            <h3>By default <code>data-ya-trigger="always"</code></h3>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Example</h3>
+                </div>
+
+                <div class="panel-body">
+                    <code>
+                        <span class="text-info">&lt;a</span> <span class="text-primary">href=</span><span class="text-danger">"./path/to.html"</span> <span class="text-primary">class=</span><span class="text-danger" >"yaah-js"</span> <span class="text-primary">data-ya-trigger=</span><span class="text-danger">"always"</span> <span class="text-info" >&gt;</span><span class="text-muted">Click Me!</span><span class="text-info" >&lt;/a&gt;</span>
+                    </code>
+                </div>
+                <div class="panel-footer">
+                    <a href="./ajax/test.php" class="yaah-js" data-ya-trigger="always" data-ya-post="test=always" data-ya-location="after">Click Me!</a>
+                </div>
+            </div>
+
+
+            <h3>Only on time with <code>data-ya-trigger="once"</code></h3>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Example</h3>
+                </div>
+
+                <div class="panel-body">
+                    <code>
+                        <span class="text-info">&lt;a</span> <span class="text-primary">href=</span><span class="text-danger">"./path/to.html"</span> <span class="text-primary">class=</span><span class="text-danger" >"yaah-js"</span> <span class="text-primary">data-ya-trigger=</span><span class="text-danger">"once"</span> <span class="text-info" >&gt;</span><span class="text-muted">Click Me!</span><span class="text-info" >&lt;/a&gt;</span>
+                    </code>
+                </div>
+                <div class="panel-footer">
+                    <a href="./ajax/test.php" class="yaah-js" data-ya-trigger="once" data-ya-post="test=once" data-ya-location="after">Click Me!</a>
+                </div>
+            </div>
+
+            <h3>Automaticaly with <code>data-ya-trigger="autoload"</code></h3>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Example</h3>
+                </div>
+
+                <div class="panel-body">
+                    <code>
+                        <span class="text-info">&lt;a</span> <span class="text-primary">href=</span><span class="text-danger">"./path/to.html"</span> <span class="text-primary">class=</span><span class="text-danger" >"yaah-js"</span> <span class="text-primary">data-ya-trigger=</span><span class="text-danger">"autoload"</span> <span class="text-info" >&gt;</span><span class="text-muted">Click Me!</span><span class="text-info" >&lt;/a&gt;</span>
+                    </code>
+                </div>
+                <div class="panel-footer">
+                    <a href="./ajax/test.php" class="yaah-js" data-ya-trigger="autoload" data-ya-post="test=autoload">Click Me!</a>
+                </div>
+            </div>
+
+            <h3>Submit a form with <code>data-ya-trigger="submit"</code></h3>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Example</h3>
+                </div>
+
+                <div class="panel-body">
+                    <code>
+                        <span class="text-info">&lt;form</span>  <span class="text-primary">class=</span><span class="text-danger" >"yaah-js"</span> <span class="text-primary">data-ya-trigger=</span><span class="text-danger">"submit"</span> <span class="text-primary">action=</span><span class="text-danger">"./path/to.html"</span><span class="text-info" >&gt;</span><span class="text-muted">...</span><span class="text-info" >&lt;/form&gt;</span>
+                    </code>
+                </div>
+                <div class="panel-footer">
+                    <div class="container-fluid">
+                        <form name="test_form" id="test_form" class="yaah-js form-horizontal" data-ya-trigger="submit" action="./ajax/testform.php" role="form" data-ya-target="#form_data" data-ya-location="inner">
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="truc"> input 1</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="input1" id="truc" class="form-control"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="truc2"> input 2</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="input2" id="truc2" class="form-control col-sm-9"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="truc3"> input 3</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="input3" id="truc3" class="form-control col-sm-9"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-10 col-sm-offset-3">
+                                    <div class="center-block">
+                                        <button type="submit" class="btn btn-default">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div id="form_data"></div>
+                    </div>
+                </div>
+            </div>
+
+
+            <br/>
+
+            <h3>Redirect after success with <code>data-ya-redirect="path/to/url"</code></h3>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Example</h3>
+                </div>
+
+                <div class="panel-body">
+                    <code>
+                        <span class="text-info">&lt;a</span> <span class="text-primary">href=</span><span class="text-danger">"./path/to.html"</span> <span class="text-primary">class=</span><span class="text-danger" >"yaah-js"</span> <span class="text-primary">data-ya-trigger=</span><span class="text-danger">"autoload"</span> <span class="text-info" >&gt;</span><span class="text-muted">Click Me!</span><span class="text-info" >&lt;/a&gt;</span>
+                    </code>
+                </div>
+                <div class="panel-footer">
+                    <a href="./ajax/test.php" class="yaah-js" data-ya-redirect="http://www.google.fr">Click Me!</a>
+                </div>
+            </div>
+
+
+            <h3>Confirm before send <code>data-ya-confirm="Message to show"</code></h3>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Example</h3>
+                </div>
+
+                <div class="panel-body">
+                    <code>
+                        <span class="text-info">&lt;a</span> <span class="text-primary">href=</span><span class="text-danger">"./path/to.html"</span> <span class="text-primary">class=</span><span class="text-danger" >"yaah-js"</span> <span class="text-primary">data-ya-confirm=</span><span class="text-danger">"JavaScript! Do you speak it?"</span> <span class="text-info" >&gt;</span><span class="text-muted">Click Me!</span><span class="text-info" >&lt;/a&gt;</span>
+                    </code>
+                </div>
+                <div class="panel-footer">
+                    <a href="./ajax/test.php" class="yaah-js" data-ya-confirm="JavaScript! Do you speak it?" data-ya-post="test=confirm">Click Me!</a>
+                </div>
+            </div>
+
+            <h3>Update url with <code>data-ya-pushstate="/path/to/show"</code></h3>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Example</h3>
+                </div>
+
+                <div class="panel-body">
+                    <code>
+                        <span class="text-info">&lt;a</span> <span class="text-primary">href=</span><span class="text-danger">"./path/to.html"</span> <span class="text-primary">class=</span><span class="text-danger" >"yaah-js"</span> <span class="text-primary">data-ya-pushstate=</span><span class="text-danger">"/path/to/show"</span> <span class="text-info" >&gt;</span><span class="text-muted">Click Me!</span><span class="text-info" >&lt;/a&gt;</span>
+                    </code>
+                </div>
+                <div class="panel-footer">
+                    <a href="./ajax/test.php" class="yaah-js" data-ya-pushstate="/path/to/show" data-ya-post="test=pushstate">Click Me!</a>
+                </div>
+            </div>
+
+            <!-- <h2>Scroll</h2>
+            <h3> Example 17 - data-ya-scroll</h3>
+            <ul class="yaah-js" data-ya-href="./ajax/test.php" data-ya-scroll="true" data-ya-post="test=17">
+                <li>Machin</li>
+                <li>Machin</li>
+                <li>Machin</li>
+                <li>Machin</li>
+            </ul> -->
         </div>
-
-        <h2>Trigger</h2>
-        <h3> Example 11 - data-ya-trigger="autoload" </h3>
-        <a href="./ajax/test.php" class="yaah-js" data-ya-trigger="autoload" data-ya-post="test=11">Test</a>
-
-        <h3> Example 12 - data-ya-trigger="always" </h3>
-        <a href="./ajax/test.php" class="yaah-js" data-ya-trigger="always" data-ya-post="test=12" data-ya-location="after">Test</a>
-
-        <h2>Redirect</h2>
-        <h3> Example 13 - data-ya-redirect </h3>
-        <a href="./ajax/test.php" class="yaah-js" data-ya-redirect="http://www.peugeot.fr">Test</a>
-
-        <h2>yaah-js in loaded content</h2>
-        <h3> Example 13 - load </h3>
-        <a href="./ajax/test2.php" class="yaah-js">Test</a>
-
-        <h2>Confirm</h2>
-        <h3> Example 14 - data-ya-confirm </h3>
-        <a href="./ajax/test.php" class="yaah-js" data-ya-confirm="JavaScript! Do you speak it?" data-ya-post="test=14">Test</a>
-
-        <h2>PushState</h2>
-        <h3> Example 15 - data-ya-pushstate </h3>
-        <a href="./ajax/test.php" class="yaah-js" data-ya-pushstate="#moncul" data-ya-post="test=15">Test</a>
-
-
-        <h2>Form</h2>
-        <h3> Example 16 - data-ya-scroll</h3>
-        <form id="test_form_id" class="yaah-js" data-ya-trigger="submit" data-ya-post="test=16" action='./ajax/test2.php'>
-            <li><label> Truc 1<input type="text" name="truc"/></label></li>
-            <li><label> Truc 2<input type="text" name="truc2"/></label></li>
-            <li><label> Truc 3<input type="text" name="truc3"/></label></li>
-            <li><label> Truc 4<input type="text" name="truc4"/></label></li>
-            <li><label> Truc 5<input type="text" name="truc5"/></label></li>
-            <button type="submit">Send</button>
-        </form>
-
-
-        <h2>Scroll</h2>
-        <h3> Example 17 - data-ya-scroll</h3>
-        <ul class="yaah-js" data-ya-href="./ajax/test.php" data-ya-scroll="true" data-ya-post="test=17">
-            <li>Machin</li>
-            <li>Machin</li>
-            <li>Machin</li>
-            <li>Machin</li>
-        </ul>
 
         <script src="./vendor/modernizr.js"></script>
         <script src="./vendor/jquery.min.js"></script>

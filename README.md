@@ -1,7 +1,7 @@
 YAAH.js
 ======
 ---
-__Yet Another Ajax Helper__ (pronounced [Yaah!](http://goo.gl/P4BzG4))
+__Yet Another Ajax Helper__ (pronounced [Yaah!](http://goo.gl/Nu36Fl) or just [Ya!](http://goo.gl/P4BzG4))
 
 YAAH helps to easily handle:
 
@@ -9,6 +9,7 @@ YAAH helps to easily handle:
 * infinite load more
 * content lazy loader
 * url rewrite on ajax and history (>=IE 10)
+
 ---
 
 Dependencies

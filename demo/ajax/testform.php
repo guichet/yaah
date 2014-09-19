@@ -1,0 +1,1 @@
+<div>Transmitted data: <?php var_dump($_POST);?> </div>
