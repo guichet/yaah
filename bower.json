@@ -3,14 +3,17 @@
   "version": "0.1",
   "homepage": "https://github.com/les-argonautes/yaah",
   "authors": [
-    "adriench"
+    { "name": "adriench"},
+    { "name": "cvergne" }
   ],
   "description": "Yet Another AJAX Helper",
   "main": "yaah.js",
   "keywords": [
+    "ajax",
     "jquery",
     "scroll",
-    "ajax",
+    "loadmore",
+    "pushstate",
     "yaah"
   ],
   "license": "MIT",
@@ -18,5 +21,9 @@
     "**/.*",
     "node_modules",
     "bower_components"
-  ]
+  ],
+  "dependencies": {
+    "jquery": ">= 2.1.1",
+    "modernizr": ">= 2.8.3"
+  }
 }
