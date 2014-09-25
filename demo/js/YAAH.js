@@ -40,32 +40,40 @@
                 pushstate      = $(item).data('ya-pushstate') || null,
                 pushstatetitle = $(item).data('ya-pushstatetitle') || '',
                 post           = $(item).data('ya-post') || null,
+                timer          = $(item).data('ya-timer') || null,
                 scroll         = $(item).data('ya-scroll') || null;
 
                 switch(trigger){
                     case "once":
                         $(item).one('click' ,function(event) {
                             event.preventDefault();
-                            _this._ya_ajax(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle);
+                            _this._ya_ajax(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer);
                         });
                     break;
 
                     case "always":
                         $(item).on('click', function(event) {
                             event.preventDefault();
-                            _this._ya_ajax(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle);
+                            _this._ya_ajax(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer);
                         });
                     break;
 
                     case "autoload":
-                        _this._ya_ajax(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle);
+                        if ( trigger == 'autoload' && timer!=null ){
+                            var realTimer = timer * 1000;
+                            window.setInterval( function(){
+                                _this._ya_ajax(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer);
+                            }, realTimer);
+                        } else {
+                            _this._ya_ajax(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer);
+                        }
                     break;
 
                     case "submit":
                         $(item).on('submit', function(event) {
                             event.preventDefault();
-                            post = $(this).serialize();
-                            _this._ya_ajax(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle);
+                            post = $(item).serialize();
+                            _this._ya_ajax(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer);
                         });
                     break;
 
@@ -73,7 +81,7 @@
                         scroll.on('scroll', function(event) {
                             event.preventDefault();
                             // TO DO => SetTimeout() + requestAnimationFrame() to have fewer triggers
-                            // _this._ya_ajax(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle);
+                            // _this._ya_ajax(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer);
                         });
                     break;
                 }
@@ -81,7 +89,7 @@
             return $(this);
         },
 
-        _ya_ajax : function(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle){
+        _ya_ajax : function(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer){
             var _this = this;
 
             if ( !$(item).hasClass(_this.loaderClass) ){
@@ -90,7 +98,6 @@
                 if ( post ){
                     requestType = "POST";
                 }
-
                 // Running AJAX
                 $.ajax({
                     type: requestType,
@@ -148,7 +155,17 @@
                     return $(this);
                 break;
 
+                case 'top':
+                    target ? $(target).prepend(html) : $(item).prepend(html);
+                    return $(this);
+                break;
+
                 case 'inner':
+                    target ? $(target).html(html) : $(item).html(html);
+                    return $(this);
+                break;
+
+                case 'bottom':
                     target ? $(target).append(html) : $(item).append(html);
                     return $(this);
                 break;
