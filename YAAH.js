@@ -1,5 +1,5 @@
 // =========================================================================
-// YAAH - Yet Another AJAX Helper - v0.2.2
+// YAAH - Yet Another AJAX Helper - v0.2.3
 // =========================================================================
 // Needs jQuery and Modernizr
 
@@ -124,7 +124,7 @@
                         _this._ya_pushstate(pushstatetitle, pushstate); // Update url
                         if (redirect){ window.location.replace(redirect); } // Redirect
 
-                        $(item).trigger('yaah-js_xhr_success', [target, item]);
+                        $(item).trigger('yaah-js_xhr_success', [target, item, data]);
                     },
                     error: function(xhr, textStatus, errorThrown){
                         $(item).trigger('yaah-js_xhr_fail', [target, item]);
