@@ -1,5 +1,5 @@
 // =========================================================================
-// YAAH - Yet Another AJAX Helper - v0.2.1
+// YAAH - Yet Another AJAX Helper - v0.2.2
 // =========================================================================
 // Needs jQuery and Modernizr
 
@@ -72,7 +72,7 @@
                     case "submit":
                         $(item).on('submit', function(event) {
                             event.preventDefault();
-                            newpost = $(item).serialize()+'&'+$.param(post);
+                            var newpost = post==null ? $(item).serialize() : $(item).serialize()+'&'+$.param(post);
                             _this._ya_ajax(item, newpost, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer);
                         });
                     break;
