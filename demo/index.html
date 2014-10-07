@@ -38,7 +38,7 @@
                     </code>
                 </div>
                 <div class="panel-footer">
-                    <a href="./ajax/test.php" class="yaah-js" data-ya-post="test=simple&nbsp;link">Click Me!</a>
+                    <a href="./ajax/test.php" class="yaah-js" data-ya-post='{"test":"simple link"}'>Click Me!</a>
                 </div>
             </div>
 
@@ -55,7 +55,7 @@
                     </code>
                 </div>
                 <div class="panel-footer">
-                    <button class="yaah-js btn btn-default" data-ya-href="./ajax/test.php" data-ya-post="test=any&nbsp;element">Click Me!</button>
+                    <button class="yaah-js btn btn-default" data-ya-href="./ajax/test.php" data-ya-post='{"test":"any element"}'>Click Me!</button>
                 </div>
             </div>
 
@@ -67,11 +67,11 @@
 
                 <div class="panel-body">
                     <code>
-                        <span class="text-info">&lt;a</span> <span class="text-primary">href=</span><span class="text-danger">"./path/to.html"</span> <span class="text-primary">class=</span><span class="text-danger" >"yaah-js"</span> <span class="text-primary">data-ya-post=</span><span class="text-danger">"test=example"</span> <span class="text-info" >&gt;</span><span class="text-muted">Click Me!</span><span class="text-info" >&lt;/a&gt;</span>
+                        <span class="text-info">&lt;a</span> <span class="text-primary">href=</span><span class="text-danger">"./path/to.html"</span> <span class="text-primary">class=</span><span class="text-danger" >"yaah-js"</span> <span class="text-primary">data-ya-post=</span><span class="text-danger">'{"test":"example"}'</span> <span class="text-info" >&gt;</span><span class="text-muted">Click Me!</span><span class="text-info" >&lt;/a&gt;</span>
                     </code>
                 </div>
                 <div class="panel-footer">
-                    <a href="./ajax/test.php" class="yaah-js" data-ya-post="test=example">Click Me!</a>
+                    <a href="./ajax/test.php" class="yaah-js" data-ya-post='{"test":"example","truc":"bidule"}'>Click Me!</a>
                 </div>
             </div>
 
@@ -95,7 +95,7 @@
                     </code>
                 </div>
                 <div class="panel-footer">
-                    <a href="./ajax/test.php" class="yaah-js" data-ya-target="#target" data-ya-post="test=target">Click Me!</a>
+                    <a href="./ajax/test.php" class="yaah-js" data-ya-target="#target" data-ya-post='{"test":"target"}'>Click Me!</a>
                     <div id="target">
                         Hey I'm a target!
                     </div>
@@ -114,7 +114,7 @@
                     </code>
                 </div>
                 <div class="panel-footer">
-                    <a href="./ajax/test.php" class="yaah-js" data-ya-location="after" data-ya-post="test=after">Click me!</a>
+                    <a href="./ajax/test.php" class="yaah-js" data-ya-location="after" data-ya-post='{"test":"after"}'>Click me!</a>
                 </div>
             </div>
 
@@ -130,7 +130,7 @@
                     </code>
                 </div>
                 <div class="panel-footer">
-                    <a href="./ajax/test.php" class="yaah-js" data-ya-location="before" data-ya-post="test=before">Click me!</a>
+                    <a href="./ajax/test.php" class="yaah-js" data-ya-location="before" data-ya-post='{"test":"before"}'>Click me!</a>
                 </div>
             </div>
 
@@ -146,7 +146,7 @@
                     </code>
                 </div>
                 <div class="panel-footer">
-                    <a href="./ajax/test.php" class="yaah-js" data-ya-location="inner" data-ya-post="test=inner">Click me!</a>
+                    <a href="./ajax/test.php" class="yaah-js" data-ya-location="inner" data-ya-post='{"test":"inner"}'>Click me!</a>
                 </div>
             </div>
 
@@ -162,7 +162,7 @@
                     </code>
                 </div>
                 <div class="panel-footer">
-                    <a href="./ajax/test.php" class="yaah-js" data-ya-location="top" data-ya-post="test=top">Click me!</a>
+                    <a href="./ajax/test.php" class="yaah-js" data-ya-location="top" data-ya-post='{"test":"top"}'>Click me!</a>
                 </div>
             </div>
 
@@ -178,7 +178,7 @@
                     </code>
                 </div>
                 <div class="panel-footer">
-                    <a href="./ajax/test.php" class="yaah-js" data-ya-location="bottom" data-ya-post="test=bottom">Click me!</a>
+                    <a href="./ajax/test.php" class="yaah-js" data-ya-location="bottom" data-ya-post='{"test":"bottom"}'>Click me!</a>
                 </div>
             </div>
 
@@ -194,7 +194,23 @@
                     </code>
                 </div>
                 <div class="panel-footer">
-                    <a href="./ajax/test.php" class="yaah-js" data-ya-location="remove" data-ya-post="test=remove">Click me!</a>
+                    <a href="./ajax/test.php" class="yaah-js" data-ya-location="remove" data-ya-post='{"test":"remove"}'>Click me!</a>
+                </div>
+            </div>
+
+            <h3>Remove the target <code>data-ya-location="hide"</code></h3>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Example</h3>
+                </div>
+
+                <div class="panel-body">
+                    <code>
+                        <span class="text-info">&lt;a</span> <span class="text-primary">href=</span><span class="text-danger">"./path/to.html"</span> <span class="text-primary">class=</span><span class="text-danger" >"yaah-js"</span> <span class="text-primary">data-ya-location=</span><span class="text-danger">"hide"</span> <span class="text-info" >&gt;</span><span class="text-muted">Where is Jessica Hide?</span><span class="text-info" >&lt;/a&gt;</span>
+                    </code>
+                </div>
+                <div class="panel-footer">
+                    <a href="./ajax/test.php" class="yaah-js" data-ya-location="hide" data-ya-post='{"test":"remove"}'>Where is Jessica Hide?</a>
                 </div>
             </div>
 
@@ -211,7 +227,7 @@
                     </code>
                 </div>
                 <div class="panel-footer">
-                    <a href="./ajax/test.php" class="yaah-js" data-ya-location="none" data-ya-post="test=none">Click me!</a>
+                    <a href="./ajax/test.php" class="yaah-js" data-ya-location="none" data-ya-post='{"test":"none"}'>Click me!</a>
                 </div>
             </div>
 
@@ -230,7 +246,7 @@
                     </code>
                 </div>
                 <div class="panel-footer">
-                    <a href="./ajax/test.php" class="yaah-js" data-ya-trigger="always" data-ya-post="test=always" data-ya-location="after">Click Me!</a>
+                    <a href="./ajax/test.php" class="yaah-js" data-ya-trigger="always" data-ya-post='{"test":"always"}' data-ya-location="after">Click Me!</a>
                 </div>
             </div>
 
@@ -247,7 +263,7 @@
                     </code>
                 </div>
                 <div class="panel-footer">
-                    <a href="./ajax/test.php" class="yaah-js" data-ya-trigger="once" data-ya-post="test=once" data-ya-location="after">Click Me!</a>
+                    <a href="./ajax/test.php" class="yaah-js" data-ya-trigger="once" data-ya-post='{"test":"once"}' data-ya-location="after">Click Me!</a>
                 </div>
             </div>
 
@@ -263,7 +279,7 @@
                     </code>
                 </div>
                 <div class="panel-footer">
-                    <a href="./ajax/test.php" class="yaah-js" data-ya-trigger="autoload" data-ya-post="test=autoload" data-ya-timer="5">Click Me!</a>
+                    <a href="./ajax/test.php" class="yaah-js" data-ya-trigger="autoload" data-ya-post='{"test":"autoload"}' data-ya-timer="5">Click Me!</a>
                 </div>
             </div>
 
@@ -344,7 +360,7 @@
                     </code>
                 </div>
                 <div class="panel-footer">
-                    <a href="./ajax/test.php" class="yaah-js" data-ya-confirm="JavaScript! Do you speak it?" data-ya-post="test=confirm">Click Me!</a>
+                    <a href="./ajax/test.php" class="yaah-js" data-ya-confirm="JavaScript! Do you speak it?" data-ya-post='{"test":"confirm"}'>Click Me!</a>
                 </div>
             </div>
 
@@ -360,7 +376,7 @@
                     </code>
                 </div>
                 <div class="panel-footer">
-                    <a href="./ajax/test.php" class="yaah-js" data-ya-pushstate="/path/to/show" data-ya-post="test=pushstate">Click Me!</a>
+                    <a href="./ajax/test.php" class="yaah-js" data-ya-pushstate="/path/to/show" data-ya-post='{"test":"pushstate"}'>Click Me!</a>
                 </div>
             </div>
 
@@ -376,7 +392,7 @@
                     </code>
                 </div>
                 <div class="panel-footer">
-                    <a href="./ajax/test.php" class="yaah-js" data-ya-location="bottom" data-ya-trigger="autoload" data-ya-timer="10" data-ya-post="test=loop">Click Me!</a>
+                    <a href="./ajax/test.php" class="yaah-js" data-ya-location="bottom" data-ya-trigger="autoload" data-ya-timer="100" data-ya-post='{"test":"loop"}'>Click Me!</a>
                 </div>
             </div>
 
