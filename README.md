@@ -1,4 +1,4 @@
-YAAH.js v0.2.3
+YAAH.js v0.2.4
 ======
 ---
 __Yet Another Ajax Helper__ (pronounced [Yaah!](http://goo.gl/Nu36Fl) or just [Ya!](http://goo.gl/P4BzG4))

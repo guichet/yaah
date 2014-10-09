@@ -1,6 +1,8 @@
 .ya-loading{
-    opacity: 0;
     transition: all 100ms ease;
+    display: block;
+    height: 50px;
+    width: 50px;
 }
 .ya-loading::before{
     content: '';
