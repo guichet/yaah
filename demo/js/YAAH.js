@@ -1,5 +1,5 @@
 // =========================================================================
-// YAAH - Yet Another AJAX Helper - v0.2.4
+// YAAH - Yet Another AJAX Helper - v0.2.4.1
 // =========================================================================
 // Needs jQuery and Modernizr
 
@@ -90,8 +90,9 @@
         },
 
         _ya_loading : function(item,target,location){
-            var _this = this,
-            loader = $('<span>', {class: _this.loaderClass});
+            var _this = this;
+
+            var loader = $('<span>', {class: _this.loaderClass});
 
             switch(location){
                 case 'replace':
@@ -153,8 +154,6 @@
                     url: href,
                     cache: false,
                     beforeSend: function(){
-
-
                         _this._ya_loading(item,target,location); // Show loader
 
                         $(item).addClass('yaah-running'); // Show loader and disable new requests
@@ -175,15 +174,15 @@
                         $('.'+_this.loaderClass).remove(); // Remove loader
                         _this._ya_insert_to_location(item, target, location, data); // Insert response
                         _this._ya_pushstate(pushstatetitle, pushstate); // Update url
-                        if (redirect){ window.location.replace(redirect); } // Redirect
-
                         $(item).trigger('yaah-js_xhr_success', [target, item, data]);
 
+                        if (redirect){ window.location.replace(redirect); } // Redirect
                     },
                     error: function(xhr, textStatus, errorThrown){
                         $(item).trigger('yaah-js_xhr_fail', [target, item]);
                     },
                     complete: function(){
+                        $(item).removeClass('yaah-running'); // Enable new requests
                         _this._ya_reload();
                         $(item).trigger('yaah-js_xhr_complete', [target, item]);
                     }
