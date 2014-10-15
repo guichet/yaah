@@ -1,5 +1,5 @@
 // =========================================================================
-// YAAH - Yet Another AJAX Helper - v0.2.4.1
+// YAAH - Yet Another AJAX Helper - v0.2.5
 // =========================================================================
 // Needs jQuery and Modernizr
 
@@ -116,7 +116,13 @@
                 break;
 
                 case 'inner':
-                    target ? $(target).html(loader) : $(item).html(loader);
+                    if (target){
+                        $(target).children().hide();
+                        $(target).prepend(loader);
+                    } else {
+                        $(item).children().hide();
+                        $(item).prepend(loader);
+                    }
                     return $(this);
                 break;
 
@@ -163,14 +169,20 @@
                             if ( confirmation ){
                                 return $(this);
                             }else{
-                                $(item).removeClass(_this.loaderClass);
+                                $(item).removeClass('yaah-running');
+                                $('.'+_this.loaderClass).remove();
+                                if (target){
+                                    $(target).children().show();
+                                } else {
+                                    $(item).children().show();
+                                }
                                 return false;
                             }
                         }
                         $(item).trigger('yaah-js_xhr_beforeSend', [target, item]);
                     },
                     success: function(data){
-
+                        $(item).removeClass('yaah-running');
                         $('.'+_this.loaderClass).remove(); // Remove loader
                         _this._ya_insert_to_location(item, target, location, data); // Insert response
                         _this._ya_pushstate(pushstatetitle, pushstate); // Update url
