@@ -273,14 +273,4 @@
         var Ya = new Yaah();
     });
 
-})(window.jQuery, window, document);next init
-
-        },
-    },
-    window.Yaah = Yaah;
-
-    $(document).ready(function(){
-        var Ya = new Yaah();
-    });
-
 })(window.jQuery, window, document);
