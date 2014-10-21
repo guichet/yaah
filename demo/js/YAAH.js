@@ -1,5 +1,5 @@
 // =========================================================================
-// YAAH - Yet Another AJAX Helper - v0.2.5
+// YAAH - Yet Another AJAX Helper - v0.2.5.1
 // =========================================================================
 // Needs jQuery and Modernizr
 
@@ -160,24 +160,20 @@
                     url: href,
                     cache: false,
                     beforeSend: function(){
-                        _this._ya_loading(item,target,location); // Show loader
 
                         $(item).addClass('yaah-running'); // Show loader and disable new requests
 
-                        if( confirm ){ // Show confirmation box
+                        if( confirm ){ // If need confirmation => Show confirmation box
                             var confirmation = _this._ya_confirm(confirm);
                             if ( confirmation ){
+                                _this._ya_loading(item,target,location); // Show loader
                                 return $(this);
-                            }else{
+                            } else {
                                 $(item).removeClass('yaah-running');
-                                $('.'+_this.loaderClass).remove();
-                                if (target){
-                                    $(target).children().show();
-                                } else {
-                                    $(item).children().show();
-                                }
                                 return false;
                             }
+                        } else {
+                            _this._ya_loading(item,target,location); // Show loader
                         }
                         $(item).trigger('yaah-js_xhr_beforeSend', [target, item]);
                     },
@@ -268,6 +264,16 @@
             });
             this._ya_init(newItems); // Init the new items
             this.allItems = $(this.defaults.bindingClass); // Update full list for next init
+
+        },
+    },
+    window.Yaah = Yaah;
+
+    $(document).ready(function(){
+        var Ya = new Yaah();
+    });
+
+})(window.jQuery, window, document);next init
 
         },
     },
