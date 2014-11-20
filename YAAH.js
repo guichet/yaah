@@ -266,11 +266,10 @@
             this.allItems = $(this.defaults.bindingClass); // Update full list for next init
 
         },
-    },
-    window.Yaah = Yaah;
+    };
 
     $(document).ready(function(){
-        var Ya = new Yaah();
+        window.Yaah = new Yaah();
     });
 
 })(window.jQuery, window, document);
