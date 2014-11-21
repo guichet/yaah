@@ -1,5 +1,5 @@
 // =========================================================================
-// YAAH - Yet Another AJAX Helper - v0.2.5.1
+// YAAH - Yet Another AJAX Helper - v0.2.5.2
 // =========================================================================
 // Needs jQuery and Modernizr
 
@@ -266,11 +266,10 @@
             this.allItems = $(this.defaults.bindingClass); // Update full list for next init
 
         },
-    },
-    window.Yaah = Yaah;
+    };
 
     $(document).ready(function(){
-        var Ya = new Yaah();
+        window.Yaah = new Yaah();
     });
 
 })(window.jQuery, window, document);
