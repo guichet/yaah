@@ -1,4 +1,4 @@
-YAAH.js v0.2.5.2
+YAAH.js
 ======
 ---
 __Yet Another Ajax Helper__ (pronounced [Yaah!](http://goo.gl/Nu36Fl) or just [Ya!](http://goo.gl/P4BzG4))
@@ -55,6 +55,29 @@ Options
 
 #### AJAX Request Loop `data-ya-timer` 
 > - `time in seconds`: Number of seconds between AJAX call
+
+Events
+------
+Events are triggered to the element with the `yaah-js` class.  
+Most of them are similar to regular XHR events:
+> - `yaah-js_xhr_beforeSend`: before the XHR is sent
+> - `yaah-js_xhr_complete`: XHR complete
+> - `yaah-js_xhr_beforeInsert`: XHR success, but before updating target with data
+> - `yaah-js_xhr_success`: XHR success, after target updated with data (*please read below if `.yaah-js` element is in target*)
+
+For case where your `.yaah-js` element is in the target (*and then, removed when data is updated*), you might not be able to get the event catchable on any element with delegation, like that :  
+`$(document).on('yaah-js_xhr_success', '.yaah-js', …);`
+
+So, for this specific behavior, YAAH generates an unique event id sent in `yaah-js_xhr_beforeInsert` event, then triggered after the data update.  
+**Use it only if your element is in the target. Otherwise, you can juste use the `yaah-js_xhr_success` event**
+
+```javascript
+$(document.body).on('yaah-js_xhr_beforeInsert', '.yaah-js', function(e, eventId, target, item, data) {
+	$(document).one(eventId, function(e, target, item, data){
+		// do whatever you want in the target, with the target, or with the data.
+	});
+});
+```
 
 
 To Do

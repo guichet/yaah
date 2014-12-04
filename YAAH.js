@@ -19,11 +19,20 @@
             location    : 'replace',       // The default behavior
             post        : null             // no Ajax post params
         },
+        eventslist : {
+            xhr_beforeSend   : 'yaah-js_xhr_beforeSend',
+            xhr_success      : 'yaah-js_xhr_success',
+            xhr_fail         : 'yaah-js_xhr_fail',
+            xhr_complete     : 'yaah-js_xhr_complete',
+            xhr_beforeInsert : 'yaah-js_xhr_beforeInsert',
+            xhr_afterInsert  : 'yaah-js_xhr_afterInsert'
+        },
         _init : function(){
             var _this         = this;
             this.bindingClass = this.defaults.bindingClass,
             this.loaderClass  = this.defaults.loaderClass,
             this.allItems     = $(this.defaults.bindingClass);
+            this.uniqId       = 0;
 
             this._ya_init(this.allItems);
         },
@@ -31,30 +40,32 @@
             var _this = this;
 
             $(allItems).each(function(key,item){
-                var href       = $(item).data('ya-href') || $(item).attr('href') || $(item).attr('action'),
-                trigger        = $(item).data('ya-trigger') || _this.defaults.trigger,
-                redirect       = $(item).data('ya-redirect') || null,
-                target         = $(item).data('ya-target') || null,
-                location       = $(item).data('ya-location') || _this.defaults.location,
-                confirm        = $(item).data('ya-confirm') || null,
-                pushstate      = $(item).data('ya-pushstate') || null,
-                pushstatetitle = $(item).data('ya-pushstatetitle') || '',
-                post           = $(item).data('ya-post') || null,
-                timer          = $(item).data('ya-timer') || null,
-                scroll         = $(item).data('ya-scroll') || null;
+                var $item      = $(item),
+                href           = $item.data('ya-href') || $item.attr('href') || $item.attr('action'),
+                trigger        = $item.data('ya-trigger') || _this.defaults.trigger,
+                redirect       = $item.data('ya-redirect') || null,
+                target         = $item.data('ya-target') || null,
+                location       = $item.data('ya-location') || _this.defaults.location,
+                confirm        = $item.data('ya-confirm') || null,
+                pushstate      = $item.data('ya-pushstate') || null,
+                pushstatetitle = $item.data('ya-pushstatetitle') || '',
+                post           = $item.data('ya-post') || null,
+                timer          = $item.data('ya-timer') || null,
+                scroll         = $item.data('ya-scroll') || null,
+                uniqId         = ++_this.uniqId;
 
                 switch(trigger){
                     case "once":
-                        $(item).one('click' ,function(event) {
+                        $item.one('click' ,function(event) {
                             event.preventDefault();
-                            _this._ya_ajax(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer);
+                            _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId);
                         });
                     break;
 
                     case "always":
-                        $(item).on('click', function(event) {
+                        $item.on('click', function(event) {
                             event.preventDefault();
-                            _this._ya_ajax(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer);
+                            _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId);
                         });
                     break;
 
@@ -62,18 +73,18 @@
                         if ( trigger == 'autoload' && timer!=null ){
                             var realTimer = timer * 1000;
                             window.setInterval( function(){
-                                _this._ya_ajax(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer);
+                                _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId);
                             }, realTimer);
                         } else {
-                            _this._ya_ajax(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer);
+                            _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId);
                         }
                     break;
 
                     case "submit":
-                        $(item).on('submit', function(event) {
+                        $item.on('submit', function(event) {
                             event.preventDefault();
-                            var newpost = post==null ? $(item).serialize() : $(item).serialize()+'&'+$.param(post);
-                            _this._ya_ajax(item, newpost, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer);
+                            var newpost = post==null ? $item.serialize() : $item.serialize()+'&'+$.param(post);
+                            _this._ya_ajax($item, newpost, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId);
                         });
                     break;
 
@@ -81,7 +92,7 @@
                         scroll.on('scroll', function(event) {
                             event.preventDefault();
                             // TO DO => SetTimeout() + requestAnimationFrame() to have fewer triggers
-                            // _this._ya_ajax(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer);
+                            // _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId);
                         });
                     break;
                 }
@@ -89,29 +100,29 @@
             return $(this);
         },
 
-        _ya_loading : function(item,target,location){
+        _ya_loading : function($item,target,location){
             var _this = this;
 
             var loader = $('<span>', {class: _this.loaderClass});
 
             switch(location){
                 case 'replace':
-                    target ? $(target).hide().before(loader) : $(item).hide().before(loader);
+                    target ? $(target).hide().before(loader) : $item.hide().before(loader);
                     return $(this);
                 break;
 
                 case 'before':
-                    target ? $(target).before(loader) : $(item).before(loader);
+                    target ? $(target).before(loader) : $item.before(loader);
                     return $(this);
                 break;
 
                 case 'after':
-                    target ? $(target).after(loader) : $(item).after(loader);
+                    target ? $(target).after(loader) : $item.after(loader);
                     return $(this);
                 break;
 
                 case 'top':
-                    target ? $(target).prepend(loader) : $(item).prepend(loader);
+                    target ? $(target).prepend(loader) : $item.prepend(loader);
                     return $(this);
                 break;
 
@@ -143,10 +154,10 @@
             }
         },
 
-        _ya_ajax : function(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer){
+        _ya_ajax : function($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId){
             var _this = this;
 
-            if ( !$(item).hasClass('yaah-running') ){
+            if ( !$item.hasClass('yaah-running') ){
 
                 var requestType = "GET";
                 if ( post ){
@@ -161,78 +172,82 @@
                     cache: false,
                     beforeSend: function(){
 
-                        $(item).addClass('yaah-running'); // Show loader and disable new requests
+                        $item.addClass('yaah-running'); // Show loader and disable new requests
 
                         if( confirm ){ // If need confirmation => Show confirmation box
                             var confirmation = _this._ya_confirm(confirm);
                             if ( confirmation ){
-                                _this._ya_loading(item,target,location); // Show loader
+                                _this._ya_loading($item,target,location); // Show loader
                                 return $(this);
                             } else {
-                                $(item).removeClass('yaah-running');
+                                $item.removeClass('yaah-running');
                                 return false;
                             }
                         } else {
-                            _this._ya_loading(item,target,location); // Show loader
+                            _this._ya_loading($item,target,location); // Show loader
                         }
-                        $(item).trigger('yaah-js_xhr_beforeSend', [target, item]);
+                        $item.trigger(_this.eventslist.xhr_beforeSend, [target, $item]);
                     },
                     success: function(data){
-                        $(item).removeClass('yaah-running');
+                        var afterInsertEventId = _this.eventslist.xhr_afterInsert + '.' + uniqId;
+
+                        $item.removeClass('yaah-running');
                         $('.'+_this.loaderClass).remove(); // Remove loader
-                        _this._ya_insert_to_location(item, target, location, data); // Insert response
+                        $item.trigger(_this.eventslist.xhr_beforeInsert, [afterInsertEventId, target, $item, data]); // Trigger "beforeInsert" event
+                        _this._ya_insert_to_location($item, target, location, data); // Insert response
                         _this._ya_pushstate(pushstatetitle, pushstate); // Update url
-                        $(item).trigger('yaah-js_xhr_success', [target, item, data]);
+                        $item.trigger(_this.eventslist.xhr_success, [target, $item, data]); // Trigger "success" event
+                        $(document).trigger(afterInsertEventId, [target, $item, data]); // Trigger "afterInsert" event
 
                         if (redirect){ window.location.replace(redirect); } // Redirect
                     },
                     error: function(xhr, textStatus, errorThrown){
-                        $(item).trigger('yaah-js_xhr_fail', [target, item]);
+                        $item.trigger(_this.eventslist.xhr_fail, [target, $item]);
                     },
                     complete: function(){
-                        $(item).removeClass('yaah-running'); // Enable new requests
+                        $item.removeClass('yaah-running'); // Enable new requests
                         _this._ya_reload();
-                        $(item).trigger('yaah-js_xhr_complete', [target, item]);
+                        $item.trigger(_this.eventslist.xhr_complete, [target, $item]);
                     }
                 });
             }
 
             return $(this);
         },
-        _ya_insert_to_location : function(item, target, location, html){
+        _ya_insert_to_location : function($item, target, location, html){
             switch(location){
                 case 'replace':
-                    target ? $(target).replaceWith(html) : $(item).replaceWith(html);
+                    target ? $(target).replaceWith(html) : $item.replaceWith(html);
                     return $(this);
                 break;
 
                 case 'before':
-                    target ? $(target).before(html) : $(item).before(html);
+                    target ? $(target).before(html) : $item.before(html);
                     return $(this);
                 break;
 
                 case 'after':
-                    target ? $(target).after(html) : $(item).after(html);
+                    target ? $(target).after(html) : $item.after(html);
                     return $(this);
                 break;
 
                 case 'top':
-                    target ? $(target).prepend(html) : $(item).prepend(html);
+                    target ? $(target).prepend(html) : $item.prepend(html);
                     return $(this);
                 break;
 
                 case 'inner':
-                    target ? $(target).html(html) : $(item).html(html);
+                    target ? $(target).html(html) : $item.html(html);
                     return $(this);
                 break;
 
                 case 'bottom':
-                    target ? $(target).append(html) : $(item).append(html);
+                    target ? $(target).append(html) : $item.append(html);
                     return $(this);
                 break;
 
                 case 'remove':
-                    target ? $(target).remove() : $(item).remove();
+                    target ? $(target).remove() : $item.remove();
                     return $(this);
                 break;
 
