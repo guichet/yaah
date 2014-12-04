@@ -19,11 +19,20 @@
             location    : 'replace',       // The default behavior
             post        : null             // no Ajax post params
         },
+        eventslist : {
+            xhr_beforeSend   : 'yaah-js_xhr_beforeSend',
+            xhr_success      : 'yaah-js_xhr_success',
+            xhr_fail         : 'yaah-js_xhr_fail',
+            xhr_complete     : 'yaah-js_xhr_complete',
+            xhr_beforeInsert : 'yaah-js_xhr_beforeInsert',
+            xhr_afterInsert  : 'yaah-js_xhr_afterInsert'
+        },
         _init : function(){
             var _this         = this;
             this.bindingClass = this.defaults.bindingClass,
             this.loaderClass  = this.defaults.loaderClass,
             this.allItems     = $(this.defaults.bindingClass);
+            this.uniqId       = 0;
 
             this._ya_init(this.allItems);
         },
@@ -41,20 +50,21 @@
                 pushstatetitle = $(item).data('ya-pushstatetitle') || '',
                 post           = $(item).data('ya-post') || null,
                 timer          = $(item).data('ya-timer') || null,
-                scroll         = $(item).data('ya-scroll') || null;
+                scroll         = $(item).data('ya-scroll') || null,
+                uniqId         = ++_this.uniqId;
 
                 switch(trigger){
                     case "once":
                         $(item).one('click' ,function(event) {
                             event.preventDefault();
-                            _this._ya_ajax(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer);
+                            _this._ya_ajax(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId);
                         });
                     break;
 
                     case "always":
                         $(item).on('click', function(event) {
                             event.preventDefault();
-                            _this._ya_ajax(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer);
+                            _this._ya_ajax(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId);
                         });
                     break;
 
@@ -62,10 +72,10 @@
                         if ( trigger == 'autoload' && timer!=null ){
                             var realTimer = timer * 1000;
                             window.setInterval( function(){
-                                _this._ya_ajax(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer);
+                                _this._ya_ajax(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId);
                             }, realTimer);
                         } else {
-                            _this._ya_ajax(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer);
+                            _this._ya_ajax(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId);
                         }
                     break;
 
@@ -73,7 +83,7 @@
                         $(item).on('submit', function(event) {
                             event.preventDefault();
                             var newpost = post==null ? $(item).serialize() : $(item).serialize()+'&'+$.param(post);
-                            _this._ya_ajax(item, newpost, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer);
+                            _this._ya_ajax(item, newpost, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId);
                         });
                     break;
 
@@ -81,7 +91,7 @@
                         scroll.on('scroll', function(event) {
                             event.preventDefault();
                             // TO DO => SetTimeout() + requestAnimationFrame() to have fewer triggers
-                            // _this._ya_ajax(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer);
+                            // _this._ya_ajax(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId);
                         });
                     break;
                 }
@@ -143,7 +153,7 @@
             }
         },
 
-        _ya_ajax : function(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer){
+        _ya_ajax : function(item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId){
             var _this = this;
 
             if ( !$(item).hasClass('yaah-running') ){
@@ -175,24 +185,28 @@
                         } else {
                             _this._ya_loading(item,target,location); // Show loader
                         }
-                        $(item).trigger('yaah-js_xhr_beforeSend', [target, item]);
+                        $(item).trigger(_this.eventslist.xhr_beforeSend, [target, item]);
                     },
                     success: function(data){
+                        var afterInsertEventId = _this.eventslist.xhr_afterInsert + '.' + uniqId;
+
                         $(item).removeClass('yaah-running');
                         $('.'+_this.loaderClass).remove(); // Remove loader
+                        $(item).trigger(_this.eventslist.xhr_beforeInsert, [afterInsertEventId, target, item, data]); // Trigger "beforeInsert" event
                         _this._ya_insert_to_location(item, target, location, data); // Insert response
                         _this._ya_pushstate(pushstatetitle, pushstate); // Update url
-                        $(item).trigger('yaah-js_xhr_success', [target, item, data]);
+                        $(item).trigger(_this.eventslist.xhr_success, [target, item, data]); // Trigger "success" event
+                        $(document).trigger(afterInsertEventId, [target, item, data]); // Trigger "afterInsert" event
 
                         if (redirect){ window.location.replace(redirect); } // Redirect
                     },
                     error: function(xhr, textStatus, errorThrown){
-                        $(item).trigger('yaah-js_xhr_fail', [target, item]);
+                        $(item).trigger(_this.eventslist.xhr_fail, [target, item]);
                     },
                     complete: function(){
                         $(item).removeClass('yaah-running'); // Enable new requests
                         _this._ya_reload();
-                        $(item).trigger('yaah-js_xhr_complete', [target, item]);
+                        $(item).trigger(_this.eventslist.xhr_complete, [target, item]);
                     }
                 });
             }
