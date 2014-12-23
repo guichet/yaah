@@ -1,5 +1,5 @@
 // =========================================================================
-// YAAH - Yet Another AJAX Helper - v0.3
+// YAAH - Yet Another AJAX Helper - v0.3.1
 // =========================================================================
 // Needs jQuery and Modernizr
 
@@ -103,7 +103,7 @@
         _ya_loading : function($item,target,location){
             var _this = this;
 
-            var loader = $('<span>', {class: _this.loaderClass});
+            var loader = $('<span>', {'class': _this.loaderClass});
 
             switch(location){
                 case 'replace':
