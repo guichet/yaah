@@ -1,5 +1,5 @@
 // =========================================================================
-// YAAH - Yet Another AJAX Helper - v0.3.1
+// YAAH - Yet Another AJAX Helper - v0.4.0
 // =========================================================================
 // Needs jQuery and Modernizr
 
@@ -52,20 +52,21 @@
                 post           = $item.data('ya-post') || null,
                 timer          = $item.data('ya-timer') || null,
                 scroll         = $item.data('ya-scroll') || null,
+                xhr2           = $item.data('ya-xhr2') || true,
                 uniqId         = ++_this.uniqId;
 
                 switch(trigger){
                     case "once":
                         $item.one('click' ,function(event) {
                             event.preventDefault();
-                            _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId);
+                            _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId, xhr2);
                         });
                     break;
 
                     case "always":
                         $item.on('click', function(event) {
                             event.preventDefault();
-                            _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId);
+                            _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId, xhr2);
                         });
                     break;
 
@@ -73,18 +74,35 @@
                         if ( trigger == 'autoload' && timer!=null ){
                             var realTimer = timer * 1000;
                             window.setInterval( function(){
-                                _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId);
+                                _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId, xhr2);
                             }, realTimer);
                         } else {
-                            _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId);
+                            _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId, xhr2);
                         }
                     break;
 
-                    case "submit":
+                   case "submit":
                         $item.on('submit', function(event) {
                             event.preventDefault();
-                            var newpost = post==null ? $item.serialize() : $item.serialize()+'&'+$.param(post);
-                            _this._ya_ajax($item, newpost, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId);
+
+                            if ( xhr2 ){ // By default xhr2 for modern browsers
+                                var formData = new FormData(this);
+
+                                if ( post != null ){ // EXTRA DATA TREATMENT
+                                    var json = $.parseJSON(post) ;
+
+                                    for (var key in json) {
+                                      if (json.hasOwnProperty(key)) {
+                                        formData.append( key, json[key]);
+                                      }
+                                    }
+                                }
+                                var newpost = formData;
+                            } else {
+                                var newpost = post==null ? $item.serialize() : $item.serialize()+'&'+$.param(post);
+                            }
+
+                            _this._ya_ajax($item, newpost, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId, xhr2);
                         });
                     break;
 
@@ -92,7 +110,7 @@
                         scroll.on('scroll', function(event) {
                             event.preventDefault();
                             // TO DO => SetTimeout() + requestAnimationFrame() to have fewer triggers
-                            // _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId);
+                            // _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId, xhr2);
                         });
                     break;
                 }
@@ -154,12 +172,12 @@
             }
         },
 
-        _ya_ajax : function($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId){
+        _ya_ajax : function($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId, xhr2){
             var _this = this;
 
             if ( !$item.hasClass('yaah-running') ){
 
-                var requestType = "GET";
+                var requestType = "POST";
                 if ( post ){
                     requestType = "POST";
                 }
@@ -169,7 +187,10 @@
                     type: requestType,
                     data: post,
                     url: href,
-                    cache: false,
+                    mimeType    : "multipart/form-data",
+                    contentType : false,
+                    cache       : false,
+                    processData : false,
                     beforeSend: function(){
 
                         $item.addClass('yaah-running'); // Show loader and disable new requests
