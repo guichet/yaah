@@ -18,17 +18,18 @@ Needs `jQuery`, `Modernizr`
 
 How to
 ------
-`class="yaah-js"`: Bind the event to the desired element  
+`class="yaah-js"`: Bind the event to the desired element
 `data-ya-href`: Link to the content to insert (can be href if the element is an anchor)
 
 Options
 -----------
-#### Triggers: `data-ya-trigger` 
+#### Triggers: `data-ya-trigger`
 >  - `always`: Always trigger the request (default)
 >  - `once`: Trigger the request one time only
 >  - `submit`: Submit Form in AJAX with serialized data
 >  - `autoload`: Autoload the request on DOMReady
- 
+>  - `manual`: Triggered manually when bind the associated event
+
 #### Location:  `data-ya-location`
 > - `replace` Replace the target element
 > - `after`: Insert after the target element
@@ -53,22 +54,23 @@ Options
 #### AJAX Request Data `data-ya-post`
 > - `serializedData`: String of serialized data to pass to the AJAX request
 
-#### AJAX Request Loop `data-ya-timer` 
+#### AJAX Request Loop `data-ya-timer`
 > - `time in seconds`: Number of seconds between AJAX call
 
 Events
 ------
-Events are triggered to the element with the `yaah-js` class.  
+Events are triggered to the element with the `yaah-js` class.
 Most of them are similar to regular XHR events:
+> - `yaah-js_xhr_manualTrigger`: the event to trigger for "manual" trigger
 > - `yaah-js_xhr_beforeSend`: before the XHR is sent
 > - `yaah-js_xhr_complete`: XHR complete
 > - `yaah-js_xhr_beforeInsert`: XHR success, but before updating target with data
 > - `yaah-js_xhr_success`: XHR success, after target updated with data (*please read below if `.yaah-js` element is in target*)
 
-For case where your `.yaah-js` element is in the target (*and then, removed when data is updated*), you might not be able to get the event catchable on any element with delegation, like that :  
+For case where your `.yaah-js` element is in the target (*and then, removed when data is updated*), you might not be able to get the event catchable on any element with delegation, like that :
 `$(document).on('yaah-js_xhr_success', '.yaah-js', …);`
 
-So, for this specific behavior, YAAH generates an unique event id sent in `yaah-js_xhr_beforeInsert` event, then triggered after the data update.  
+So, for this specific behavior, YAAH generates an unique event id sent in `yaah-js_xhr_beforeInsert` event, then triggered after the data update.
 **Use it only if your element is in the target. Otherwise, you can juste use the `yaah-js_xhr_success` event**
 
 ```javascript

@@ -1,5 +1,5 @@
 // =========================================================================
-// YAAH - Yet Another AJAX Helper - v0.4.0
+// YAAH - Yet Another AJAX Helper - v0.4.1
 // =========================================================================
 // Needs jQuery and Modernizr
 
@@ -20,6 +20,7 @@
             post        : null             // no Ajax post params
         },
         eventslist : {
+            xhr_manualTrigger: 'yaah-js_xhr_manualTrigger',
             xhr_beforeSend   : 'yaah-js_xhr_beforeSend',
             xhr_success      : 'yaah-js_xhr_success',
             xhr_fail         : 'yaah-js_xhr_fail',
@@ -111,6 +112,12 @@
                             event.preventDefault();
                             // TO DO => SetTimeout() + requestAnimationFrame() to have fewer triggers
                             // _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId, xhr2);
+                        });
+                    break;
+
+                    case "manual":
+                        $item.on(_this.eventslist.xhr_manualTrigger, function(event) {
+                            _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId, xhr2);
                         });
                     break;
                 }

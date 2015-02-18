@@ -1,1 +1,1 @@
-<div class="text-success"> Test <?php echo($_POST["test"]);?> passed!</div>
+<div class="text-success"> Test <?php echo (isset($_POST["test"]) ? $_POST["test"] : '' );?> passed!</div>
