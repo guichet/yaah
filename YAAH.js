@@ -1,5 +1,5 @@
 // =========================================================================
-// YAAH - Yet Another AJAX Helper - v0.4.1
+// YAAH - Yet Another AJAX Helper - v0.4.2
 // =========================================================================
 // Needs jQuery and Modernizr
 
@@ -20,6 +20,7 @@
             post        : null             // no Ajax post params
         },
         eventslist : {
+            xhr_submit       : 'yaah-js_xhr_submit',
             xhr_manualTrigger: 'yaah-js_xhr_manualTrigger',
             xhr_beforeSend   : 'yaah-js_xhr_beforeSend',
             xhr_success      : 'yaah-js_xhr_success',
@@ -85,6 +86,8 @@
                    case "submit":
                         $item.on('submit', function(event) {
                             event.preventDefault();
+
+                            $item.trigger(_this.eventslist.xhr_submit); // Trigger a "submit" event, before fetching data
 
                             if ( xhr2 ){ // By default xhr2 for modern browsers
                                 var formData = new FormData(this);
