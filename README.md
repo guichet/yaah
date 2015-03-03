@@ -61,6 +61,7 @@ Events
 ------
 Events are triggered to the element with the `yaah-js` class.
 Most of them are similar to regular XHR events:
+> - `yaah-js_xhr_submit`: event triggered on form submit just before data fetch
 > - `yaah-js_xhr_manualTrigger`: the event to trigger for "manual" trigger
 > - `yaah-js_xhr_beforeSend`: before the XHR is sent
 > - `yaah-js_xhr_complete`: XHR complete
