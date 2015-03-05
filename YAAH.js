@@ -55,11 +55,15 @@
                 timer          = $item.data('ya-timer') || null,
                 scroll         = $item.data('ya-scroll') || null,
                 xhr2           = $item.data('ya-xhr2') || true,
+                nopropagation  = $item.data('ya-nopropagation') || false,
                 uniqId         = ++_this.uniqId;
 
                 switch(trigger){
                     case "once":
                         $item.one('click' ,function(event) {
+                            if(nopropagation){
+                                event.stopPropagation();
+                            }
                             event.preventDefault();
                             _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId, xhr2);
                         });
@@ -67,6 +71,9 @@
 
                     case "always":
                         $item.on('click', function(event) {
+                            if(nopropagation){
+                                event.stopPropagation();
+                            }
                             event.preventDefault();
                             _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId, xhr2);
                         });
@@ -85,6 +92,9 @@
 
                    case "submit":
                         $item.on('submit', function(event) {
+                            if(nopropagation){
+                                event.stopPropagation();
+                            }
                             event.preventDefault();
 
                             $item.trigger(_this.eventslist.xhr_submit); // Trigger a "submit" event, before fetching data
@@ -112,6 +122,9 @@
 
                     case "scroll":
                         scroll.on('scroll', function(event) {
+                            if(nopropagation){
+                                event.stopPropagation();
+                            }
                             event.preventDefault();
                             // TO DO => SetTimeout() + requestAnimationFrame() to have fewer triggers
                             // _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId, xhr2);
