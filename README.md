@@ -45,6 +45,9 @@ Options
 #### Redirect `data-ya-redirect`
 > - `http://path/to/url`: Redirect after AJAX to the url (page reload)
 
+#### Stop event propagation `data-ya-nopropagation`
+> - `true`: Stop event propagation on click. Useful if you don't want to trigger parent events.
+
 #### Confirm `data-ya-confirm`
 > - `JavaScript! Do you speak it ?`: Display the message in a confirm box, trigger AJAX on confirm only.
 
