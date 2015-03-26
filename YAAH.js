@@ -1,5 +1,5 @@
 // =========================================================================
-// YAAH - Yet Another AJAX Helper - v0.4.3
+// YAAH - Yet Another AJAX Helper - v0.4.4
 // =========================================================================
 // Needs jQuery and Modernizr
 
@@ -200,7 +200,7 @@
 
             if ( !$item.hasClass('yaah-running') ){
 
-                var requestType = "POST";
+                var requestType = "GET";
                 if ( post ){
                     requestType = "POST";
                 }
