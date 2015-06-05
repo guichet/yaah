@@ -226,10 +226,10 @@
                     type: requestType,
                     data: post,
                     url: href,
-                    mimeType    : "multipart/form-data",
-                    contentType : false,
+                    mimeType    : ((xhr2) ? "multipart/form-data" : null),
+                    contentType : ((xhr2) ? false : $.ajaxSetup().contentType),
                     cache       : false,
-                    processData : false,
+                    processData : ((xhr2) ? false : $.ajaxSetup().processData),
                     beforeSend: function(){
 
                         $item.addClass('yaah-running'); // Show loader and disable new requests
