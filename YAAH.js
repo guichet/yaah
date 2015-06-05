@@ -203,6 +203,22 @@
                 var requestType = "GET";
                 if ( post ){
                     requestType = "POST";
+
+                    // XHR 2 FormData process
+                    if (xhr2 && post.constructor != FormData) {
+                        // If post is just a string of json object
+                        if (!$.isPlainObject(post)) {
+                            var post = $.parseJSON(post);
+                        }
+                        var formData = new FormData();
+
+                        for (var key in post) {
+                            if (post.hasOwnProperty(key)) {
+                                formData.append(key, post[key]);
+                            }
+                        }
+                        post = formData;
+                    }
                 }
 
                 // Running AJAX
@@ -324,7 +340,7 @@
             this._ya_init(newItems); // Init the new items
             this.allItems = $(this.defaults.bindingClass); // Update full list for next init
 
-        },
+        }
     };
 
     $(document).ready(function(){
