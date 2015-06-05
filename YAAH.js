@@ -54,7 +54,7 @@
                 post           = $item.data('ya-post') || null,
                 timer          = $item.data('ya-timer') || null,
                 scroll         = $item.data('ya-scroll') || null,
-                xhr2           = $item.data('ya-xhr2') || true,
+                xhr2           = $item.data('ya-xhr2') || ('FormData' in window),
                 nopropagation  = $item.data('ya-nopropagation') || false,
                 uniqId         = ++_this.uniqId;
 
