@@ -270,7 +270,7 @@
             <h3>Submit a form with <code>data-ya-trigger="submit"</code></h3>
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Example</h3>
+                    <h3 class="panel-title">Example #1: Default behavior</h3>
                 </div>
 
                 <div class="panel-body">
@@ -280,23 +280,23 @@
                 </div>
                 <div class="panel-footer">
                     <div class="container-fluid">
-                        <form name="test_form" id="test_form" class="yaah-js form-horizontal" data-ya-trigger="submit" action="./ajax/testform.php" role="form" data-ya-target="#form_data" data-ya-location="inner">
+                        <form name="test_form" id="test_form" class="yaah-js form-horizontal" data-ya-trigger="submit" action="./ajax/testform.php" role="form" data-ya-target="#form_data_1" data-ya-location="inner">
                             <div class="form-group">
                                 <label class="control-label col-sm-2" for="truc"> input 1</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="input1" id="truc" class="form-control"/>
+                                    <input type="text" name="input1" id="truc" class="form-control" value="value 1" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-sm-2" for="truc2"> input 2</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="input2" id="truc2" class="form-control col-sm-9"/>
+                                    <input type="text" name="input2" id="truc2" class="form-control col-sm-9" value="value for input 2" />
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="control-label col-sm-2" for="truc3"> input 3</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="input3" id="truc3" class="form-control col-sm-9"/>
+                                    <input type="text" name="input3" id="truc3" class="form-control col-sm-9" value="010101 (value for input 3)" />
                                 </div>
                             </div>
                             <div class="form-group">
@@ -307,7 +307,44 @@
                                 </div>
                             </div>
                         </form>
-                        <div id="form_data"></div>
+                        <div id="form_data_1"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Example #2: Method specified in form attributes</h3>
+                </div>
+
+                <div class="panel-body">
+                    <code>
+                        <span class="text-info">&lt;form</span>  <span class="text-primary">method=</span><span class="text-danger" >"get"</span>  <span class="text-primary">class=</span><span class="text-danger" >"yaah-js"</span> <span class="text-primary">data-ya-trigger=</span><span class="text-danger">"submit"</span> <span class="text-primary">action=</span><span class="text-danger">"./path/to.html"</span><span class="text-info" >&gt;</span><span class="text-muted">...</span><span class="text-info" >&lt;/form&gt;</span>
+                    </code>
+                </div>
+                <div class="panel-footer">
+                    <div class="container-fluid">
+                        <form name="test_form" id="test_form" method="get" class="yaah-js form-horizontal" data-ya-trigger="submit" action="./ajax/testform.php" role="form" data-ya-target="#form_data_2" data-ya-location="inner">
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="truc"> input 1</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="input1" id="truc" class="form-control" value="value for 1"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="truc2"> input 2</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="input2" id="truc2" class="form-control col-sm-9" value="input value 2" />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-10 col-sm-offset-3">
+                                    <div class="center-block">
+                                        <button type="submit" class="btn btn-default">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div id="form_data_2"></div>
                     </div>
                 </div>
             </div>

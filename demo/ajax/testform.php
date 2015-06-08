@@ -1,1 +1,7 @@
-<div>Transmitted data: <?php var_dump($_POST);?> </div>
+<pre>// ## SUCCESS
+// GET
+<?php print_r($_GET);?>
+
+// POST
+<?php print_r($_POST);?>
+</pre>
