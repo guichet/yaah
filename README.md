@@ -54,6 +54,9 @@ Options
 #### Url Update History `data-ya-pushstate`
 > - `url/to/push`: url to push to the history
 
+#### AJAX Request Method `data-ya-method` (or `method` on `form` element)
+> - `GET`, `POST`, etc.: the form method to use for the AJAX Request. If not specified, `GET` is used as default, and `POST` if there is `data-ya-post`.
+
 #### AJAX Request Data `data-ya-post`
 > - `serializedData`: String of serialized data to pass to the AJAX request
 

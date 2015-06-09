@@ -54,8 +54,9 @@
                 post           = $item.data('ya-post') || null,
                 timer          = $item.data('ya-timer') || null,
                 scroll         = $item.data('ya-scroll') || null,
-                xhr2           = $item.data('ya-xhr2') || true,
+                xhr2           = $item.data('ya-xhr2') || ('FormData' in window),
                 nopropagation  = $item.data('ya-nopropagation') || false,
+                method         = $item.data('ya-method') || $item.attr('method') || null,
                 uniqId         = ++_this.uniqId;
 
                 switch(trigger){
@@ -65,7 +66,7 @@
                                 event.stopPropagation();
                             }
                             event.preventDefault();
-                            _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId, xhr2);
+                            _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId, xhr2, method);
                         });
                     break;
 
@@ -75,7 +76,7 @@
                                 event.stopPropagation();
                             }
                             event.preventDefault();
-                            _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId, xhr2);
+                            _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId, xhr2, method);
                         });
                     break;
 
@@ -83,10 +84,10 @@
                         if ( trigger == 'autoload' && timer!=null ){
                             var realTimer = timer * 1000;
                             window.setInterval( function(){
-                                _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId, xhr2);
+                                _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId, xhr2, method);
                             }, realTimer);
                         } else {
-                            _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId, xhr2);
+                            _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId, xhr2, method);
                         }
                     break;
 
@@ -99,7 +100,7 @@
 
                             $item.trigger(_this.eventslist.xhr_submit); // Trigger a "submit" event, before fetching data
 
-                            if ( xhr2 ){ // By default xhr2 for modern browsers
+                            if ( xhr2 && (method == null || method.toUpperCase() != 'GET') ){ // By default xhr2 for modern browsers
                                 var formData = new FormData(this);
 
                                 if ( post != null ){ // EXTRA DATA TREATMENT
@@ -116,7 +117,7 @@
                                 var newpost = post==null ? $item.serialize() : $item.serialize()+'&'+$.param(post);
                             }
 
-                            _this._ya_ajax($item, newpost, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId, xhr2);
+                            _this._ya_ajax($item, newpost, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId, xhr2, method);
                         });
                     break;
 
@@ -127,13 +128,13 @@
                             }
                             event.preventDefault();
                             // TO DO => SetTimeout() + requestAnimationFrame() to have fewer triggers
-                            // _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId, xhr2);
+                            // _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId, xhr2, method);
                         });
                     break;
 
                     case "manual":
                         $item.on(_this.eventslist.xhr_manualTrigger, function(event) {
-                            _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId, xhr2);
+                            _this._ya_ajax($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId, xhr2, method);
                         });
                     break;
                 }
@@ -195,14 +196,32 @@
             }
         },
 
-        _ya_ajax : function($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId, xhr2){
+        _ya_ajax : function($item, post, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId, xhr2, method){
             var _this = this;
 
             if ( !$item.hasClass('yaah-running') ){
 
-                var requestType = "GET";
+                var requestType = method || 'GET';
                 if ( post ){
-                    requestType = "POST";
+                    if (null == method) {
+                        requestType = "POST";
+                    }
+
+                    // XHR 2 FormData process
+                    if (xhr2 && requestType.toUpperCase() != 'GET' && post.constructor != FormData) {
+                        // If post is just a string of json object
+                        if (!$.isPlainObject(post)) {
+                            var post = $.parseJSON(post);
+                        }
+                        var formData = new FormData();
+
+                        for (var key in post) {
+                            if (post.hasOwnProperty(key)) {
+                                formData.append(key, post[key]);
+                            }
+                        }
+                        post = formData;
+                    }
                 }
 
                 // Running AJAX
@@ -210,10 +229,10 @@
                     type: requestType,
                     data: post,
                     url: href,
-                    mimeType    : "multipart/form-data",
-                    contentType : false,
+                    mimeType    : ((xhr2) ? "multipart/form-data" : null),
+                    contentType : ((xhr2) ? false : $.ajaxSetup().contentType),
                     cache       : false,
-                    processData : false,
+                    processData : ((xhr2) ? false : $.ajaxSetup().processData),
                     beforeSend: function(){
 
                         $item.addClass('yaah-running'); // Show loader and disable new requests
@@ -324,7 +343,7 @@
             this._ya_init(newItems); // Init the new items
             this.allItems = $(this.defaults.bindingClass); // Update full list for next init
 
-        },
+        }
     };
 
     $(document).ready(function(){
