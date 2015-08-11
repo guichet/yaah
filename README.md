@@ -26,6 +26,7 @@ Options
 #### Triggers: `data-ya-trigger`
 >  - `always`: Always trigger the request (default)
 >  - `once`: Trigger the request one time only
+>  - `change`: Trigger the request only when change event is triggered (*for `<input />`*)
 >  - `submit`: Submit Form in AJAX with serialized data
 >  - `autoload`: Autoload the request on DOMReady
 >  - `manual`: Triggered manually when bind the associated event
@@ -38,6 +39,7 @@ Options
 > - `top`: Insert at the beginning of the target element
 > - `bottom`: Insert at the end of the target element
 > - `remove`: Remove the target element
+> - `none`: Nothing is replaced or injected
 
 #### Target: `data-ya-target`
 > - `#CSS .Selector`: Can be whatever CSS Selector you like but most of the time you'll want it unique. If empty, clicked element.
@@ -92,5 +94,5 @@ $(document.body).on('yaah-js_xhr_beforeInsert', '.yaah-js', function(e, eventId,
 To Do
 -----
 
-* Touch support
-* Scroll
+* [ ] Touch support
+* [ ] Scroll
