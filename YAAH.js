@@ -91,6 +91,17 @@
                         }
                     break;
 
+                    case "change":
+                        $item.on('change', function(event) {
+                            var newpost = {};
+                            if (this.checked) {
+                                newpost[this.name] = this.value;
+                            }
+
+                            _this._ya_ajax($item, newpost, href, target, location, confirm, redirect, pushstate, pushstatetitle, timer, uniqId);
+                        });
+                    break;
+
                    case "submit":
                         $item.on('submit', function(event) {
                             if(nopropagation){
