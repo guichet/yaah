@@ -1,5 +1,5 @@
 // =========================================================================
-// YAAH - Yet Another AJAX Helper - v0.4.4
+// YAAH - Yet Another AJAX Helper - v0.4.7
 // =========================================================================
 // Needs jQuery and Modernizr
 
@@ -184,24 +184,24 @@
                         $(target).children().hide();
                         $(target).prepend(loader);
                     } else {
-                        $(item).children().hide();
-                        $(item).prepend(loader);
+                        $item.children().hide();
+                        $item.prepend(loader);
                     }
                     return $(this);
                 break;
 
                 case 'bottom':
-                    target ? $(target).append(loader) : $(item).append(loader);
+                    target ? $(target).append(loader) : $item.append(loader);
                     return $(this);
                 break;
 
                 case 'remove':
-                    target ? $(target).remove() : $(item).remove();
+                    target ? $(target).remove() : $item.remove();
                     return $(this);
                 break;
 
                 case 'none':
-                    target ? $(target).after(loader) : $(item).after(loader);
+                    target ? $(target).after(loader) : $item.after(loader);
                     return $(this);
                 break;
             }
